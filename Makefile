@@ -1,6 +1,6 @@
-NAME		:=	projet
+NAME		:=	tetris
 
-CC		:=	gcc
+CC		:=	g++
 RM		:= 	rm -f
 
 SRC_DIR 	:= 	src
@@ -8,19 +8,23 @@ OBJ_DIR 	:= 	obj
 INC_DIR 	:= 	inc
 
 LDFLAGS		:=	-I$(INC_DIR)
+LDFLAGS		+=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-CFLAGS	:=	-W -Wextra -Wall  -Werror
+CXXFLAGS	:=	-W -Wextra -Wall  -Werror
+CXXFLAGS	+=	-g
 
-#LIB		:=	-lpthread
-
-SRC		:=	main.c
+SRC		:=	main.cpp\
+			tetrimino.cpp\
+			menu.cpp\
+			game.cpp\
+			tools.cpp
 
 SRC 		:= 	$(addprefix $(SRC_DIR)/, $(SRC))
 
-OBJ 		:= 	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+OBJ 		:= 	$(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))
 
-$(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c
-													$(CC) $(CFLAGS) -c -o $@ $< $(LDFLAGS)
+$(OBJ_DIR)/%.o:		$(SRC_DIR)/%.cpp
+			$(CC) $(CXXFLAGS) -c -o $@ $< $(LDFLAGS)
 
 all:			$(NAME)
 
